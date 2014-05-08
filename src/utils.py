@@ -43,6 +43,23 @@ def point_inside_polygon(x,y,poly):
 
     return inside   
 
+def fixation_inside_aoi(fixation, polyin, polyout):
+    """Helper function that checks if a fixation object is inside the AOI described by external polygon polyin and the internal polygon polyout.
+    
+    Fixation object is inside AOI if it is inside polyin but outside polyout
+    
+    Args:
+        fixation: A Fixation object
+        polyin: the external polygon in form of a list of (x,y) tuples
+        polyout: the internal polygon in form of a list of (x,y) tuples
+    
+    Returns: 
+        A boolean for whether the Fixation is inside the AOI or not
+    """
+    return point_inside_polygon(fixation.mappedfixationpointx,
+    fixation.mappedfixationpointy, polyin) and not point_inside_polygon(fixation.mappedfixationpointx,
+    fixation.mappedfixationpointy, polyout)       
+
 def get_chunk(data, ind, start, end):
     """Returns index of first and last records in data that fall within a time interval (start-end) 
     Args:

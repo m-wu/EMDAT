@@ -327,6 +327,8 @@ class Scene(Segment):
         self.has_aois = False
         if aoilist:
             self.set_aois(segments, aoilist)
+
+        self.features['aoisequence'] = self.merge_aoisequences(segments)
             
     def getid(self):
         """Returns the scid for this Scene
@@ -448,6 +450,21 @@ class Scene(Segment):
                 lasty=y
 
         return rel_angles   
+
+    def merge_aoisequences(self, segments):
+        """returns the AOI sequence merged from the AOI sequences in the "Segment"s
+        
+        Args:
+            segments: a list of "Segment"s which belong to this Scene.
+
+        Returns:
+            a list of AOI names that correspond to the sequence of "Fixation"s in this Scene
+        """
+
+        sequence = []
+        for seg in segments:
+            sequence.extend(seg.features['aoisequence'])
+        return sequence
 
 def merge_aoistats(main_AOI_Stat,new_AOI_Stat,total_time,total_numfixations):
         """a helper method that updates the AOI_Stat object of this Scene with a new AOI_Stat object

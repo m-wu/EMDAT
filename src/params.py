@@ -47,6 +47,9 @@ featurelist = ['numsegments','length','numfixations','fixationrate','meanabspath
 featurelist.extend(['meanpupilsize', 'stddevpupilsize', 'maxpupilsize', 'minpupilsize', 'startpupilsize','endpupilsize'])
 # list of non-AOI feature names 
 
+aoisequencefeat = ['aoisequence']
+# AOI sequence feature
+
 aoigeneralfeat = ['fixationrate','numfixations','totaltimespent','proportionnum',
                   'proportiontime','longestfixation']#'timetofirstfixation','timetolastfixation',
 #list of general AOI features

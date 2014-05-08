@@ -8,6 +8,7 @@ Created on 2011-08-26
 """
 import params
 import geometry
+from utils import *
 from AOI import *
 from warnings import warn
 
@@ -182,9 +183,12 @@ class Segment():
             self.features['sumrelpathangles'] = 0
             self.features['meanrelpathangles']= 0
             self.features['stddevrelpathangles'] = 0
+        
         self.has_aois = False
         if aois:
             self.set_aois(aois,fixation_data)
+            self.features['aoisequence'] = self.generate_aoi_sequence(fixation_data, aois)
+
     def set_indices(self,sample_st,sample_end,fix_st,fix_end):
         """Sets the index features
         
@@ -460,6 +464,23 @@ class Segment():
                 num += 1
         return num
     
+    def generate_aoi_sequence(self, fixdata, aois):
+        """returns the sequence of AOI's where "Fixation"s occurred 
+    
+        Args:
+            fixdata: a list of "Fixation"s
+            
+        Returns:
+            a list of AOI names that correspond to the sequence of "Fixation" locations
+        """
+
+        sequence = []
+        for fix in fixdata:
+            for aoi in aois:
+                if fixation_inside_aoi(fix, aoi.polyin, aoi.polyout) and aoi.is_active(fix.timestamp, fix.timestamp) :
+                    sequence.append(aoi.aid)
+        return sequence
+
     def getid(self):
         """Returns the segid for this Segment
         

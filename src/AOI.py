@@ -151,7 +151,7 @@ class AOI_Stat():
                 print "len(fixation_data)",fixation_data
         else:  #global AOI (alaways active)
             fixation_data = seg_fixation_data 
-        fixation_indices = filter(lambda i: _fixation_inside_aoi(fixation_data[i],self.aoi.polyin, self.aoi.polyout), range(len(fixation_data)))
+        fixation_indices = filter(lambda i: fixation_inside_aoi(fixation_data[i],self.aoi.polyin, self.aoi.polyout), range(len(fixation_data)))
 
         fixations = map(lambda i: fixation_data[i], fixation_indices)
     
@@ -199,7 +199,7 @@ class AOI_Stat():
                     polyout = aoi.polyout
                     key = 'numtransfrom_%s'%(aid)
                     #self.features[key] = 0 #????? Samad
-                    if _fixation_inside_aoi(fixation_data[i-1], polyin, polyout):
+                    if fixation_inside_aoi(fixation_data[i-1], polyin, polyout):
                         self.features[key] += 1
                         sumtransfrom += 1
             if i < len(fixation_data)-2:
@@ -209,7 +209,7 @@ class AOI_Stat():
                     polyout = aoi.polyout
                     key = 'numtransto_%s'%(aid)
                     #self.features[key] = 0 #????? Samad
-                    if _fixation_inside_aoi(fixation_data[i+1], polyin, polyout):
+                    if fixation_inside_aoi(fixation_data[i+1], polyin, polyout):
                         self.features[key] += 1
                         sumtransto += 1
 
@@ -282,22 +282,4 @@ class AOI_Stat():
         for i in xrange(len(fn)):
             print fn[i],':',fv[i]
         print
-            
 
-def _fixation_inside_aoi(fixation, polyin, polyout):
-    """Helper function that checks if a fixation object is inside the AOI described by external polygon polyin and the internal polygon polyout.
-    
-    Fixation object is inside AOI if it is inside polyin but outside polyout
-    
-    Args:
-        fixation: A Fixation object
-        polyin: the external polygon in form of a list of (x,y) tuples
-        polyout: the internal polygon in form of a list of (x,y) tuples
-    
-    Returns: 
-        A boolean for whether the Fixation is inside the AOI or not
-    """
-    return point_inside_polygon(fixation.mappedfixationpointx,
-    fixation.mappedfixationpointy, polyin) and not point_inside_polygon(fixation.mappedfixationpointx,
-    fixation.mappedfixationpointy, polyout)     
-         
