@@ -500,9 +500,13 @@ class Segment():
         """
         sequence = []
         for fix in fixdata:
+            is_inside_aoi = False
             for aoi in aois:
                 if _fixation_inside_aoi(fix, aoi.polyin, aoi.polyout) and aoi.is_active(fix.timestamp, fix.timestamp) :
                     sequence.append(aoi.aid)
+                    is_inside_aoi = True
+            if not is_inside_aoi:
+                sequence.append("None")
         return sequence
     
     def getid(self):
