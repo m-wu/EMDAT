@@ -272,6 +272,7 @@ class Scene(Segment):
             self.features['stddevfixationduration'] = stddev(map(lambda x: float(x.fixationduration), reduce(lambda x,y: x+y ,fixationlist)))##
             self.features['sumfixationduration'] = sumfeat(segments, "features['sumfixationduration']")
             self.features['fixationrate'] = float(self.numfixations)/self.length
+            self.features['fixationdurations'] = [aoi for seg in segments for aoi in seg.feature['fixationdurations']]
             distances = self.calc_distances(fixationlist)
             abs_angles = self.calc_abs_angles(fixationlist)
             rel_angles = self.calc_rel_angles(fixationlist)

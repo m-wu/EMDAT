@@ -179,6 +179,7 @@ class Segment():
             self.features['stddevfixationduration'] = stddev(map(lambda x: float(x.fixationduration), fixation_data))
             self.features['sumfixationduration'] = sum(map(lambda x: x.fixationduration, fixation_data))
             self.features['fixationrate'] = float(self.numfixations)/self.length
+            self.features['fixationdurations'] = [fixation.fixationduration for fixation in fixation_data]
             distances = self.calc_distances(fixation_data)
             abs_angles = self.calc_abs_angles(fixation_data)
             rel_angles = self.calc_rel_angles(fixation_data)

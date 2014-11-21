@@ -49,6 +49,9 @@ featurelist.extend(['meanpupilsize', 'stddevpupilsize', 'maxpupilsize', 'minpupi
 #add distance from screen
 featurelist.extend(['meandistance', 'stddevdistance', 'maxdistance', 'mindistance', 'startdistance', 'enddistance'])
 
+# list of individual fixation durations
+fixdurationfeat = ['fixationdurations']
+
 # list of non-AOI feature names
 aoisequencefeat = ['aoisequence']
 
